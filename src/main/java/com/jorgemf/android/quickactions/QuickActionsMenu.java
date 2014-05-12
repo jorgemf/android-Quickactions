@@ -131,15 +131,15 @@ public class QuickActionsMenu extends View {
 		final float scale = context.getResources().getDisplayMetrics().density;
 
 		//noinspection ConstantConditions
-		radius = a.getDimensionPixelSize(R.styleable.QuickActions_radius, (int) (80 * scale));
-		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_radius, (int) (22 * scale));
-		textPadding = a.getDimensionPixelSize(R.styleable.QuickActions_radius, (int) (4 * scale));
-		textMargin = a.getDimensionPixelSize(R.styleable.QuickActions_radius, (int) (6 * scale));
-		scaleGrow = a.getFloat(R.styleable.QuickActions_scaleGrow, 0.28f) + 1.0f;
-		angleActions = (float) (a.getFloat(R.styleable.QuickActions_angleActions, 55) * 2 * Math.PI / 360);
-		backgroundColor = a.getColor(R.styleable.QuickActions_backgroundColor, Color.WHITE);
-		actionBackgroundColor = a.getColor(R.styleable.QuickActions_actionBackgroundColor, Color.LTGRAY);
-		actionBackgroundActiveColor = a.getColor(R.styleable.QuickActions_actionBackgroundActiveColor, Color.WHITE);
+		radius = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radius, (int) (80 * scale));
+		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radiusAction, (int) (22 * scale));
+		textPadding = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_textPadding, (int) (4 * scale));
+		textMargin = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_marginPadding, (int) (6 * scale));
+		scaleGrow = a.getFloat(R.styleable.QuickActions_quickaction_scaleGrow, 0.28f) + 1.0f;
+		angleActions = (float) (a.getFloat(R.styleable.QuickActions_quickaction_angleActions, 55) * 2 * Math.PI / 360);
+		backgroundColor = a.getColor(R.styleable.QuickActions_quickaction_backgroundColor, Color.WHITE);
+		actionBackgroundColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundColor, Color.LTGRAY);
+		actionBackgroundActiveColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundActiveColor, Color.WHITE);
 		textColor = a.getColor(R.styleable.QuickActions_android_textColor, Color.WHITE);
 		textSize = a.getDimensionPixelSize(R.styleable.QuickActions_android_textSize, (int) (13 * scale));
 
