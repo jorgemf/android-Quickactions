@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:id="@+id/layout"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context="com.jorgemf.android.quickactions.MainActivity">
+
+	<TextView
+		android:id="@+id/text_view"
+		android:text="@string/hello_world"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:id="@+id/quick_actions_menu"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="-50dp"
+		android:visibility="gone"
+		android:background="#330000"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="104dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="250dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="-50dp"
+		android:layout_marginTop="210dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="104dp"
+		android:layout_marginTop="210dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="250dp"
+		android:layout_marginTop="210dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="-50dp"
+		android:layout_marginTop="422dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="104dp"
+		android:layout_marginTop="422dp"
+		android:visibility="gone"/>
+
+	<com.jorgemf.android.quickactions.QuickActionsMenu
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="250dp"
+		android:layout_marginTop="422dp"
+		android:visibility="gone"/>
+
+
+</RelativeLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="QuickActions">
+		<attr name="radius" format="dimension"/>
+		<attr name="radiusAction" format="dimension"/>
+		<attr name="textPadding" format="dimension"/>
+		<attr name="marginPadding" format="dimension"/>
+		<attr name="scaleGrow" format="float"/>
+		<attr name="angleActions" format="float"/>
+		<attr name="backgroundColor" format="color"/>
+		<attr name="actionBackgroundColor" format="color"/>
+		<attr name="actionBackgroundActiveColor" format="color"/>
+		<attr name="android:textColor"/>
+		<attr name="android:textSize"/>
+	</declare-styleable>
+</resources>
