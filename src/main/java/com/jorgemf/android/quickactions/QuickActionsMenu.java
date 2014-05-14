@@ -287,9 +287,17 @@ public class QuickActionsMenu extends View {
 				float dy = y - touchY;
 				float distance = (float) Math.sqrt(dx * dx + dy * dy);
 				boolean activeAction = distance < radiusAction;
+				Drawable icon = action.getImage();
 				if (activeAction) {
 					actionActive = actionNumber;
-					paintActionsBackground.setColor(actionBackgroundActiveColor);
+					if (action.getImageActive() != null) {
+						icon = action.getImageActive();
+					}
+					if (action.getColorBackgroundActive() != 0) {
+						paintActionsBackground.setColor(action.getColorBackgroundActive());
+					} else {
+						paintActionsBackground.setColor(actionBackgroundActiveColor);
+					}
 				}
 				float scaleRadius = 1f;
 				distance -= radiusAction;
@@ -307,9 +315,9 @@ public class QuickActionsMenu extends View {
 				canvas.drawCircle(x, y, scaledRadius, paintActionsBackground);
 				paintActionsBackground.setColor(actionBackgroundColor);
 
-				action.getImage().setBounds((int) (x - scaledRadius), (int) (y - scaledRadius), (int) (x + scaledRadius), (int) (y + scaledRadius));
+				icon.setBounds((int) (x - scaledRadius), (int) (y - scaledRadius), (int) (x + scaledRadius), (int) (y + scaledRadius));
 				canvas.save();
-				action.getImage().draw(canvas);
+				icon.draw(canvas);
 				canvas.restore();
 
 				action.x = x;

@@ -10,6 +10,10 @@ public class QuickAction {
 
 	private Drawable image;
 
+	private Drawable imageActive;
+
+	private int colorBackgroundActive;
+
 	protected float x;
 
 	protected float y;
@@ -20,11 +24,22 @@ public class QuickAction {
 		Resources resources = context.getResources();
 		text = resources.getString(textRestId);
 		image = resources.getDrawable(drawableResId);
+		this.colorBackgroundActive = 0;
+		this.imageActive = null;
 	}
 
 	public QuickAction(CharSequence text, Drawable image) {
 		this.text = text;
 		this.image = image;
+		this.colorBackgroundActive = 0;
+		this.imageActive = null;
+	}
+
+	public QuickAction(CharSequence text, Drawable image, int colorBackgroundActive, Drawable imageActive) {
+		this.text = text;
+		this.image = image;
+		this.colorBackgroundActive = colorBackgroundActive;
+		this.imageActive = imageActive;
 	}
 
 	public Drawable getImage() {
@@ -41,5 +56,21 @@ public class QuickAction {
 
 	public void setText(CharSequence text) {
 		this.text = text;
+	}
+
+	public Drawable getImageActive() {
+		return imageActive;
+	}
+
+	public void setImageActive(Drawable imageActive) {
+		this.imageActive = imageActive;
+	}
+
+	public int getColorBackgroundActive() {
+		return colorBackgroundActive;
+	}
+
+	public void setColorBackgroundActive(int colorBackgroundActive) {
+		this.colorBackgroundActive = colorBackgroundActive;
 	}
 }
