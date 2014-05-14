@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		Resources resources = getResources();
 		quickActionsMenu.addAction("text 1", resources.getDrawable(android.R.drawable.ic_btn_speak_now));
 		quickActionsMenu.addAction("text 2", resources.getDrawable(android.R.drawable.ic_delete));
-		quickActionsMenu.addAction("text 3", resources.getDrawable(android.R.drawable.ic_input_add), resources.getDrawable(android.R.drawable.ic_input_delete), Color.BLUE);
+		quickActionsMenu.addAction("text 3", resources.getDrawable(android.R.drawable.ic_input_add), Color.BLUE, resources.getDrawable(android.R.drawable.ic_input_delete));
 //		quickActionsMenu.addAction("text 4", resources.getDrawable(android.R.drawable.ic_dialog_alert));
 
 	}

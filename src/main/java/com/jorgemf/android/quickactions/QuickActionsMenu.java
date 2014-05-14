@@ -132,28 +132,29 @@ public class QuickActionsMenu extends View {
 
 		//noinspection ConstantConditions
 		radius = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radius, (int) (80 * scale));
-		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radiusAction, (int) (22 * scale));
-		textPadding = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_textPadding, (int) (4 * scale));
+		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radiusAction, (int) (28 * scale));
+		textPadding = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_textPadding, (int) (6 * scale));
 		textMargin = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_marginPadding, (int) (6 * scale));
 		scaleGrow = a.getFloat(R.styleable.QuickActions_quickaction_scaleGrow, 0.28f) + 1.0f;
 		angleActions = (float) (a.getFloat(R.styleable.QuickActions_quickaction_angleActions, 55) * 2 * Math.PI / 360);
-		backgroundColor = a.getColor(R.styleable.QuickActions_quickaction_backgroundColor, Color.WHITE);
+		backgroundColor = a.getColor(R.styleable.QuickActions_quickaction_backgroundColor, Color.WHITE & 0x99FFFFFF); // add some transparency
 		actionBackgroundColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundColor, Color.LTGRAY);
 		actionBackgroundActiveColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundActiveColor, Color.WHITE);
 		textColor = a.getColor(R.styleable.QuickActions_android_textColor, Color.WHITE);
-		textSize = a.getDimensionPixelSize(R.styleable.QuickActions_android_textSize, (int) (13 * scale));
+		textSize = a.getDimensionPixelSize(R.styleable.QuickActions_android_textSize, (int) (14 * scale));
 
 		a.recycle();
 
 		if (isInEditMode()) {
 			Resources resources = getResources();
+			assert resources != null;
 			quickActions.add(new QuickAction("text 1", resources.getDrawable(android.R.drawable.ic_btn_speak_now)));
 			quickActions.add(new QuickAction("text 2", resources.getDrawable(android.R.drawable.ic_delete)));
 			quickActions.add(new QuickAction("text 3", resources.getDrawable(android.R.drawable.ic_input_add)));
 //			quickActions.add(new QuickAction("text 4", resources.getDrawable(android.R.drawable.ic_dialog_alert)));
 		}
 
-		size = (radius + radiusAction * scaleGrow + radiusAction * (scaleGrow - 1)) * 2 + textSize * 2.5f + textPadding * 2 + textMargin;
+		size = (radius + radiusAction * scaleGrow + radiusAction * (scaleGrow - 1)) * 2 + textSize * 2.5f + textPadding * 2 + textMargin * 2;
 		halfSize = size / 2;
 
 		paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -186,6 +187,8 @@ public class QuickActionsMenu extends View {
 			setTranslationX(x - halfSize);
 			setTranslationY(y - halfSize);
 		}
+		touchX = halfSize;
+		touchY = halfSize;
 		if (getVisibility() != View.VISIBLE) {
 			setVisibility(View.VISIBLE);
 			startAnimation(viewAnimation);
@@ -206,8 +209,16 @@ public class QuickActionsMenu extends View {
 		this.quickActions.add(new QuickAction(getContext(), textResId, iconResId));
 	}
 
-	public void addAction(CharSequence text, Drawable background) {
-		this.quickActions.add(new QuickAction(text, background));
+	public void addAction(int textResId, int iconResId, int colorActiveBackgroundResId, int iconActiveResId) {
+		this.quickActions.add(new QuickAction(getContext(), textResId, iconResId, colorActiveBackgroundResId, iconActiveResId));
+	}
+
+	public void addAction(CharSequence text, Drawable icon) {
+		this.quickActions.add(new QuickAction(text, icon));
+	}
+
+	public void addAction(CharSequence text, Drawable icon, int colorActiveBackground, Drawable iconActive) {
+		this.quickActions.add(new QuickAction(text, icon, colorActiveBackground, iconActive));
 	}
 
 	@Override
@@ -340,7 +351,7 @@ public class QuickActionsMenu extends View {
 							textX + bounds.width() + textPadding,// right
 							textY + textPadding// bottom
 					);
-					canvas.drawRoundRect(textBounds, textPadding * 2, textPadding * 2, paintActionsBackground);
+					canvas.drawRoundRect(textBounds, textPadding, textPadding, paintActionsBackground);
 					canvas.drawText(text, textX, textY, paintText);
 				}
 				actionNumber++;

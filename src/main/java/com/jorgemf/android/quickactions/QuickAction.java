@@ -28,6 +28,14 @@ public class QuickAction {
 		this.imageActive = null;
 	}
 
+	public QuickAction(Context context, int textRestId, int drawableResId, int colorBackgroundActiveResId, int imageActiveResId) {
+		Resources resources = context.getResources();
+		text = resources.getString(textRestId);
+		image = resources.getDrawable(drawableResId);
+		colorBackgroundActive = resources.getColor(colorBackgroundActiveResId);
+		imageActive = resources.getDrawable(imageActiveResId);
+	}
+
 	public QuickAction(CharSequence text, Drawable image) {
 		this.text = text;
 		this.image = image;
