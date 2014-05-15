@@ -122,7 +122,7 @@ public class QuickActionsMenu extends View {
 
 			}
 		});
-		viewAnimation.setFillEnabled(false);
+		viewAnimation.setInterpolator(new BounceInterpolator());
 
 		quickActions = new ArrayList<QuickAction>();
 
