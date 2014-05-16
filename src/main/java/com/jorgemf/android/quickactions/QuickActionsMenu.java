@@ -114,7 +114,6 @@ public class QuickActionsMenu extends View {
 
 			@Override
 			public void onAnimationEnd(Animation animation) {
-
 			}
 
 			@Override
@@ -132,11 +131,11 @@ public class QuickActionsMenu extends View {
 
 		//noinspection ConstantConditions
 		radius = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radius, (int) (80 * scale));
-		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radiusAction, (int) (28 * scale));
+		radiusAction = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_radiusAction, (int) (20 * scale));
 		textPadding = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_textPadding, (int) (6 * scale));
 		textMargin = a.getDimensionPixelSize(R.styleable.QuickActions_quickaction_marginPadding, (int) (6 * scale));
 		scaleGrow = a.getFloat(R.styleable.QuickActions_quickaction_scaleGrow, 0.28f) + 1.0f;
-		angleActions = (float) (a.getFloat(R.styleable.QuickActions_quickaction_angleActions, 55) * 2 * Math.PI / 360);
+		angleActions = (float) (a.getFloat(R.styleable.QuickActions_quickaction_angleActions, 40) * 2 * Math.PI / 360);
 		backgroundColor = a.getColor(R.styleable.QuickActions_quickaction_backgroundColor, Color.WHITE & 0x99FFFFFF); // add some transparency
 		actionBackgroundColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundColor, Color.LTGRAY);
 		actionBackgroundActiveColor = a.getColor(R.styleable.QuickActions_quickaction_actionBackgroundActiveColor, Color.WHITE);
@@ -280,9 +279,34 @@ public class QuickActionsMenu extends View {
 				positionX = getTranslationX();
 				positionY = getTranslationY();
 			}
-			float vectorY = (positionY + halfSize) - Math.min(parentHeight / 2, size);
-			float vectorX = (positionX + halfSize) - parentWidth / 2;
-			double angle = Math.atan2(vectorY, vectorX);
+			float centerY = positionY + halfSize;
+			float centerX = positionX + halfSize;
+			double angle = 0;
+			if (centerY < halfSize || centerY > parentHeight - halfSize || centerX < halfSize || centerX > parentWidth - halfSize) {
+				if (centerX < halfSize && centerY < halfSize) { // top left corner
+					float vectorY = (positionY + halfSize) - halfSize;
+					float vectorX = (positionX + halfSize) - halfSize;
+					angle = Math.atan2(vectorY, vectorX);
+				} else if (centerX > parentWidth - halfSize && centerY < halfSize) { // top right corner
+					float vectorY = (positionY + halfSize) - halfSize;
+					float vectorX = (positionX + halfSize) - (parentWidth - halfSize);
+					angle = Math.atan2(vectorY, vectorX);
+				} else if (centerX > parentWidth - halfSize && centerY > parentHeight - halfSize) { // bottom right corner
+					float vectorY = (positionY + halfSize) - (parentHeight - halfSize);
+					float vectorX = (positionX + halfSize) - (parentWidth - halfSize);
+					angle = Math.atan2(vectorY, vectorX);
+				} else if (centerX < halfSize && centerY > parentHeight - halfSize) { // bottom left corner
+					float vectorY = (positionY + halfSize) - (parentHeight - halfSize);
+					float vectorX = (positionX + halfSize) - halfSize;
+					angle = Math.atan2(vectorY, vectorX);
+				} else {
+					float vectorY = (positionY + halfSize) / parentHeight - 0.5f;
+					float vectorX = (positionX + halfSize) / parentWidth - 0.5f;
+					angle = Math.atan2(vectorY, vectorX);
+				}
+			} else {
+				angle = Math.PI / 2;
+			}
 			double initialAngle = angle - Math.PI - ((quickActions.size() - 1) * angleActions) / 2;
 			canvas.drawCircle(size / 2, size / 2, radius, paintBackground);
 			int actionNumber = 0;
@@ -312,12 +336,13 @@ public class QuickActionsMenu extends View {
 				}
 				float scaleRadius = 1f;
 				distance -= radiusAction;
-				float minDistance = radius * 2 / 3;
+				float minDistance = radius / 3;
 				if (distance < minDistance) {
 					if (distance < 0) {
 						distance = 0;
 					}
-					scaleRadius = scaleGrow - (scaleGrow - 1) * distance / minDistance;
+					float ratio = distance / minDistance;
+					scaleRadius = scaleGrow - (scaleGrow - 1) * ratio * ratio;
 					float calculatedRadius = radius + radiusAction * (scaleRadius - 1);
 					x = (float) Math.cos(calculatedAngle) * calculatedRadius + halfSize;
 					y = (float) Math.sin(calculatedAngle) * calculatedRadius + halfSize;
