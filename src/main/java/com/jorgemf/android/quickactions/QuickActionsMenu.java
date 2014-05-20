@@ -191,6 +191,7 @@ public class QuickActionsMenu extends View {
 		if (getVisibility() != View.VISIBLE) {
 			setVisibility(View.VISIBLE);
 			startAnimation(viewAnimation);
+			listener.onShow(this, tag);
 		}
 	}
 
