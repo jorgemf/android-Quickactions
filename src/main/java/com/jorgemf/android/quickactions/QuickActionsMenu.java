@@ -204,20 +204,28 @@ public class QuickActionsMenu extends View {
 		this.listener = listener;
 	}
 
-	public void addAction(int textResId, int iconResId) {
-		this.quickActions.add(new QuickAction(getContext(), textResId, iconResId));
+	public QuickAction addAction(int textResId, int iconResId) {
+		QuickAction quickAction = new QuickAction(getContext(), textResId, iconResId);
+		this.quickActions.add(quickAction);
+		return quickAction;
 	}
 
-	public void addAction(int textResId, int iconResId, int colorActiveBackgroundResId, int iconActiveResId) {
-		this.quickActions.add(new QuickAction(getContext(), textResId, iconResId, colorActiveBackgroundResId, iconActiveResId));
+	public QuickAction addAction(int textResId, int iconResId, int colorActiveBackgroundResId, int iconActiveResId) {
+		QuickAction quickAction = new QuickAction(getContext(), textResId, iconResId, colorActiveBackgroundResId, iconActiveResId);
+		this.quickActions.add(quickAction);
+		return quickAction;
 	}
 
-	public void addAction(CharSequence text, Drawable icon) {
-		this.quickActions.add(new QuickAction(text, icon));
+	public QuickAction addAction(CharSequence text, Drawable icon) {
+		QuickAction quickAction = new QuickAction(text, icon);
+		this.quickActions.add(quickAction);
+		return quickAction;
 	}
 
-	public void addAction(CharSequence text, Drawable icon, int colorActiveBackground, Drawable iconActive) {
-		this.quickActions.add(new QuickAction(text, icon, colorActiveBackground, iconActive));
+	public QuickAction addAction(CharSequence text, Drawable icon, int colorActiveBackground, Drawable iconActive) {
+		QuickAction quickAction = new QuickAction(text, icon, colorActiveBackground, iconActive);
+		this.quickActions.add(quickAction);
+		return quickAction;
 	}
 
 	@Override
