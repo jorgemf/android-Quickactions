@@ -20,6 +20,11 @@ public class MainActivity extends Activity {
 		findViewById(R.id.text_view).setOnTouchListener(touchListener);
 		quickActionsMenu.setListener(new QuickActionsListener() {
 			@Override
+			public void onShow(QuickActionsMenu quickActionsMenu, Object tag) {
+//				Toast.makeText(MainActivity.this, "On show", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
 			public void onActionSelected(QuickActionsMenu quickActionsMenu, Object tag, int action) {
 //				Toast.makeText(MainActivity.this, "Action selected: " + action, Toast.LENGTH_SHORT).show();
 			}
