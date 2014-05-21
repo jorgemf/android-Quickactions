@@ -62,9 +62,13 @@ public class QuickActionsMenu extends View {
 
 	private Paint paintText;
 
-	private float size;
+	private float height;
 
-	private float halfSize;
+	private float halfHeight;
+
+	private float width;
+
+	private float halfWidth;
 
 	private int actionActive;
 
@@ -153,13 +157,13 @@ public class QuickActionsMenu extends View {
 //			quickActions.add(new QuickAction("text 4", resources.getDrawable(android.R.drawable.ic_dialog_alert)));
 		}
 
-		size = (radius + radiusAction * scaleGrow + radiusAction * (scaleGrow - 1)) * 2 + textSize * 2.5f + textPadding * 2 + textMargin * 2;
-		halfSize = size / 2;
+		height = (radius + radiusAction * scaleGrow + radiusAction * (scaleGrow - 1)) * 2 + textSize * 2.5f + textPadding * 2 + textMargin * 2;
+		halfHeight = height / 2;
+		width = (radius + radiusAction * scaleGrow + radiusAction * (scaleGrow - 1)) * 2 + textSize;
+		halfWidth = width / 2;
 
 		paintBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paintBackground.setColor(backgroundColor);
-		paintBackground.setStyle(Paint.Style.FILL_AND_STROKE);
-		paintBackground.setShader(new RadialGradient(halfSize, halfSize, radius + radiusAction, backgroundColor, Color.TRANSPARENT, TileMode.MIRROR));
+		paintBackground.setShader(new RadialGradient(halfWidth, halfHeight, radius + radiusAction, backgroundColor, backgroundColor & 0x00FFFFFF, TileMode.MIRROR));
 
 		paintActionsBackground = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintActionsBackground.setColor(actionBackgroundColor);
@@ -177,17 +181,22 @@ public class QuickActionsMenu extends View {
 
 	public void show(float x, float y, Object tag) {
 		this.tag = tag;
+		ViewGroup parentView = (ViewGroup) getParent();
+		int[] location = new int[2];
+		parentView.getLocationOnScreen(location);
+		x -= location[0];
+		y -= location[1];
 		ViewGroup.LayoutParams params = getLayoutParams();
 		if (params instanceof RelativeLayout.LayoutParams) {
 			RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) params;
-			layoutParams.setMargins((int) (x - halfSize), (int) (y - halfSize), 0, 0);
+			layoutParams.setMargins((int) (x - halfWidth), (int) (y - halfHeight), 0, 0);
 			setLayoutParams(layoutParams);
 		} else {
-			setTranslationX(x - halfSize);
-			setTranslationY(y - halfSize);
+			setTranslationX(x - halfWidth);
+			setTranslationY(y - halfHeight);
 		}
-		touchX = halfSize;
-		touchY = halfSize;
+		touchX = halfWidth;
+		touchY = halfHeight;
 		if (getVisibility() != View.VISIBLE) {
 			setVisibility(View.VISIBLE);
 			startAnimation(viewAnimation);
@@ -231,7 +240,7 @@ public class QuickActionsMenu extends View {
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		setMeasuredDimension((int) size, (int) size);
+		setMeasuredDimension((int) width, (int) height);
 	}
 
 	@Override
@@ -288,41 +297,41 @@ public class QuickActionsMenu extends View {
 				positionX = getTranslationX();
 				positionY = getTranslationY();
 			}
-			float centerY = positionY + halfSize;
-			float centerX = positionX + halfSize;
+			float centerY = positionY + halfHeight;
+			float centerX = positionX + halfWidth;
 			double angle = 0;
-			if (centerY < halfSize || centerY > parentHeight - halfSize || centerX < halfSize || centerX > parentWidth - halfSize) {
-				if (centerX < halfSize && centerY < halfSize) { // top left corner
-					float vectorY = (positionY + halfSize) - halfSize;
-					float vectorX = (positionX + halfSize) - halfSize;
+			if (centerY < halfHeight || centerY > parentHeight - halfHeight || centerX < halfWidth || centerX > parentWidth - halfWidth) {
+				if (centerX < halfWidth && centerY < halfWidth) { // top left corner
+					float vectorY = (positionY + halfHeight) - halfHeight;
+					float vectorX = (positionX + halfWidth) - halfWidth;
 					angle = Math.atan2(vectorY, vectorX);
-				} else if (centerX > parentWidth - halfSize && centerY < halfSize) { // top right corner
-					float vectorY = (positionY + halfSize) - halfSize;
-					float vectorX = (positionX + halfSize) - (parentWidth - halfSize);
+				} else if (centerX > parentWidth - halfWidth && centerY < halfHeight) { // top right corner
+					float vectorY = (positionY + halfHeight) - halfHeight;
+					float vectorX = (positionX + halfWidth) - (parentWidth - halfWidth);
 					angle = Math.atan2(vectorY, vectorX);
-				} else if (centerX > parentWidth - halfSize && centerY > parentHeight - halfSize) { // bottom right corner
-					float vectorY = (positionY + halfSize) - (parentHeight - halfSize);
-					float vectorX = (positionX + halfSize) - (parentWidth - halfSize);
+				} else if (centerX > parentWidth - halfWidth && centerY > parentHeight - halfHeight) { // bottom right corner
+					float vectorY = (positionY + halfHeight) - (parentHeight - halfHeight);
+					float vectorX = (positionX + halfWidth) - (parentWidth - halfWidth);
 					angle = Math.atan2(vectorY, vectorX);
-				} else if (centerX < halfSize && centerY > parentHeight - halfSize) { // bottom left corner
-					float vectorY = (positionY + halfSize) - (parentHeight - halfSize);
-					float vectorX = (positionX + halfSize) - halfSize;
+				} else if (centerX < halfWidth && centerY > parentHeight - halfHeight) { // bottom left corner
+					float vectorY = (positionY + halfHeight) - (parentHeight - halfHeight);
+					float vectorX = (positionX + halfWidth) - halfWidth;
 					angle = Math.atan2(vectorY, vectorX);
 				} else {
-					float vectorY = (positionY + halfSize) / parentHeight - 0.5f;
-					float vectorX = (positionX + halfSize) / parentWidth - 0.5f;
+					float vectorY = (positionY + halfHeight) / parentHeight - 0.5f;
+					float vectorX = (positionX + halfWidth) / parentWidth - 0.5f;
 					angle = Math.atan2(vectorY, vectorX);
 				}
 			} else {
 				angle = Math.PI / 2;
 			}
 			double initialAngle = angle - Math.PI - ((quickActions.size() - 1) * angleActions) / 2;
-			canvas.drawCircle(size / 2, size / 2, radius, paintBackground);
+			canvas.drawCircle(halfWidth, halfHeight, radius, paintBackground);
 			int actionNumber = 0;
 			for (QuickAction action : quickActions) {
 				double calculatedAngle = initialAngle + actionNumber * angleActions;
-				float x = (float) Math.cos(calculatedAngle) * radius + halfSize;
-				float y = (float) Math.sin(calculatedAngle) * radius + halfSize;
+				float x = (float) Math.cos(calculatedAngle) * radius + halfWidth;
+				float y = (float) Math.sin(calculatedAngle) * radius + halfHeight;
 				if (isInEditMode() && actionNumber == 0) {
 					touchX = x + radiusAction / 2;
 					touchY = y + radiusAction / 2;
@@ -330,7 +339,7 @@ public class QuickActionsMenu extends View {
 				float dx = x - touchX;
 				float dy = y - touchY;
 				float distance = (float) Math.sqrt(dx * dx + dy * dy);
-				boolean activeAction = distance < radiusAction;
+				boolean activeAction = distance < radiusAction * scaleGrow;
 				Drawable icon = action.getImage();
 				if (activeAction) {
 					actionActive = actionNumber;
@@ -353,8 +362,8 @@ public class QuickActionsMenu extends View {
 					float ratio = distance / minDistance;
 					scaleRadius = scaleGrow - (scaleGrow - 1) * ratio * ratio;
 					float calculatedRadius = radius + radiusAction * (scaleRadius - 1);
-					x = (float) Math.cos(calculatedAngle) * calculatedRadius + halfSize;
-					y = (float) Math.sin(calculatedAngle) * calculatedRadius + halfSize;
+					x = (float) Math.cos(calculatedAngle) * calculatedRadius + halfWidth;
+					y = (float) Math.sin(calculatedAngle) * calculatedRadius + halfHeight;
 				}
 				float scaledRadius = radiusAction * scaleRadius;
 				canvas.drawCircle(x, y, scaledRadius, paintActionsBackground);
