@@ -391,10 +391,10 @@ public class QuickActionsMenu extends View {
 				actionNumber++;
 			}
 
-			paintText.setColor(Color.RED);
-			canvas.drawLine(0, touchY, size, touchY, paintText);
-			canvas.drawLine(touchX, 0, touchX, size, paintText);
-			paintText.setColor(textColor);
+//			paintText.setColor(Color.RED);
+//			canvas.drawLine(0, touchY, size, touchY, paintText);
+//			canvas.drawLine(touchX, 0, touchX, size, paintText);
+//			paintText.setColor(textColor);
 
 //			paintText.setColor(Color.RED);
 //			canvas.drawText("parentWidth   " + parentWidth, textMargin, (textSize + textPadding) * 1 + textPadding, paintText);
