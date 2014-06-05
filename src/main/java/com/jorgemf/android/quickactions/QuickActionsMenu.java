@@ -10,6 +10,7 @@ import android.graphics.RadialGradient;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -172,6 +173,7 @@ public class QuickActionsMenu extends View {
 		paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintText.setColor(textColor);
 		paintText.setTextSize(textSize);
+		paintText.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
 		bounds = new Rect();
 		textBounds = new RectF();
@@ -200,7 +202,7 @@ public class QuickActionsMenu extends View {
 		if (getVisibility() != View.VISIBLE) {
 			setVisibility(View.VISIBLE);
 			startAnimation(viewAnimation);
-			listener.onShow(this, tag);
+			listener.onShow(this, tag, x, y);
 		}
 	}
 
