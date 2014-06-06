@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 		findViewById(R.id.text_view).setOnTouchListener(touchListener);
 		quickActionsMenu.setListener(new QuickActionsListener() {
 			@Override
-			public void onShow(QuickActionsMenu quickActionsMenu, Object tag) {
+			public void onShow(QuickActionsMenu quickActionsMenu, Object tag, float x, float y) {
 //				Toast.makeText(MainActivity.this, "On show", Toast.LENGTH_SHORT).show();
 			}
 
