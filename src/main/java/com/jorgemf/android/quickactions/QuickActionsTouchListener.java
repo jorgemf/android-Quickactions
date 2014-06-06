@@ -14,13 +14,15 @@ public class QuickActionsTouchListener implements OnTouchListener {
 
 	private Object tag;
 
+	private View view;
+
 	public QuickActionsTouchListener(Context context, QuickActionsMenu quickActionsMenu) {
 		this.quickActionsMenu = quickActionsMenu;
 		gesturesDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
 
 			@Override
 			public boolean onDown(MotionEvent e) {
-				return true;
+				return false;
 			}
 
 			@Override
@@ -30,7 +32,11 @@ public class QuickActionsTouchListener implements OnTouchListener {
 
 			@Override
 			public boolean onSingleTapUp(MotionEvent e) {
-				return true;
+				if (QuickActionsTouchListener.this.quickActionsMenu.getVisibility() != View.VISIBLE) {
+					view.callOnClick();
+					return true;
+				}
+				return false;
 			}
 
 			@Override
@@ -54,6 +60,7 @@ public class QuickActionsTouchListener implements OnTouchListener {
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		if (quickActionsMenu.getVisibility() != View.VISIBLE) {
+			view = v;
 			tag = v.getTag();
 			return gesturesDetector.onTouchEvent(event);
 		}
