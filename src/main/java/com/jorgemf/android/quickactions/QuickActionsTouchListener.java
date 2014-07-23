@@ -46,6 +46,7 @@ public class QuickActionsTouchListener implements OnTouchListener {
 
 			@Override
 			public void onLongPress(MotionEvent e) {
+				view.setPressed(false);
 				QuickActionsMenu quickActionsMenu = QuickActionsTouchListener.this.quickActionsMenu;
 				quickActionsMenu.show(e.getRawX(), e.getRawY(), tag);
 			}
