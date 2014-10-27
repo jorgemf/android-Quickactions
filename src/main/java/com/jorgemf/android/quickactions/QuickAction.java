@@ -6,6 +6,12 @@ import android.graphics.drawable.Drawable;
 
 public class QuickAction {
 
+	protected float x;
+
+	protected float y;
+
+	protected boolean active;
+
 	private CharSequence text;
 
 	private Drawable image;
@@ -13,12 +19,6 @@ public class QuickAction {
 	private Drawable imageActive;
 
 	private int colorBackgroundActive;
-
-	protected float x;
-
-	protected float y;
-
-	protected boolean active;
 
 	public QuickAction(Context context, int textRestId, int drawableResId) {
 		Resources resources = context.getResources();
