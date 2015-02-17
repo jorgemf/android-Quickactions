@@ -1,5 +1,6 @@
 package com.jorgemf.android.quickactions;
 
+import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -16,6 +17,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
@@ -30,6 +32,10 @@ public class QuickActionsMenu extends View {
 	private Animation viewAnimation;
 
 	private QuickActionsListener listener;
+
+	private ArgbEvaluator mArgbEvaluator = new ArgbEvaluator();
+
+	private AccelerateInterpolator mInterpolator = new AccelerateInterpolator(1);
 
 	private float radius;
 
@@ -348,11 +354,6 @@ public class QuickActionsMenu extends View {
 					if (action.getImageActive() != null) {
 						icon = action.getImageActive();
 					}
-					if (action.getColorBackgroundActive() != 0) {
-						paintActionsBackground.setColor(action.getColorBackgroundActive());
-					} else {
-						paintActionsBackground.setColor(actionBackgroundActiveColor);
-					}
 				}
 				float scaleRadius = 1f;
 				distance -= radiusAction;
@@ -366,6 +367,13 @@ public class QuickActionsMenu extends View {
 					float calculatedRadius = radius + radiusAction * (scaleRadius - 1);
 					x = (float) Math.cos(calculatedAngle) * calculatedRadius + halfWidth;
 					y = (float) Math.sin(calculatedAngle) * calculatedRadius + halfHeight;
+					float colorRatio = mInterpolator.getInterpolation(1 - ratio);
+					paintActionsBackground.setColor(
+							(Integer) mArgbEvaluator.evaluate(
+									colorRatio,
+									actionBackgroundColor,
+									action.getColorBackgroundActive())
+					);
 				}
 				float scaledRadius = radiusAction * scaleRadius;
 				canvas.drawCircle(x, y, scaledRadius, paintActionsBackground);
