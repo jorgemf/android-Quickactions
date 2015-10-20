@@ -1,5 +1,6 @@
 package com.jorgemf.android.quickactions;
 
+import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.content.res.Resources;
@@ -191,15 +192,43 @@ public class QuickActionsMenu extends View {
         touchX = halfWidth;
         touchY = halfHeight;
         if (getVisibility() != View.VISIBLE) {
-            setVisibility(View.VISIBLE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setScaleX(0f);
-                setScaleY(0f);
-                setAlpha(0f);
-                setPivotX(getWidth() / 2);
-                setPivotY(getHeight() / 2);
-                animate().scaleX(1).scaleY(1).alpha(1).start();
+                setVisibility(INVISIBLE);
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setScaleX(0f);
+                        setScaleY(0f);
+                        setAlpha(0f);
+                        setPivotX(getMeasuredWidth() / 2);
+                        setPivotY(getMeasuredHeight() / 2);
+                        animate().scaleX(1).scaleY(1).alpha(1)
+                                .setListener(new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animation) {
+                                        setVisibility(View.VISIBLE);
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animation) {
+
+                                    }
+                                })
+                                .start();
+                    }
+                });
             } else {
+                setVisibility(View.VISIBLE);
                 startAnimation(viewAnimation);
             }
             listener.onShow(this, tag, x, y);
