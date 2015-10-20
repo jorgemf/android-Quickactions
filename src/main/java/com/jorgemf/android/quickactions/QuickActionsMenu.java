@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Shader.TileMode;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -191,7 +192,16 @@ public class QuickActionsMenu extends View {
         touchY = halfHeight;
         if (getVisibility() != View.VISIBLE) {
             setVisibility(View.VISIBLE);
-//            startAnimation(viewAnimation);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setScaleX(0f);
+                setScaleY(0f);
+                setAlpha(0f);
+                setPivotX(getWidth() / 2);
+                setPivotY(getHeight() / 2);
+                animate().scaleX(1).scaleY(1).alpha(1).start();
+            } else {
+                startAnimation(viewAnimation);
+            }
             listener.onShow(this, tag, x, y);
         }
     }
