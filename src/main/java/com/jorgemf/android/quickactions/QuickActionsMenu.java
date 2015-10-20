@@ -117,21 +117,6 @@ public class QuickActionsMenu extends View {
             }
         });
         viewAnimation = AnimationUtils.loadAnimation(context, R.anim.quick_action_show);
-        viewAnimation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
 
         quickActions = new ArrayList<QuickAction>();
 
