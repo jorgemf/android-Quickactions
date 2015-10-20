@@ -22,7 +22,7 @@ public class QuickActionsTouchListener implements OnTouchListener {
 
             @Override
             public boolean onDown(MotionEvent e) {
-                return true;
+                return false;
             }
 
             @Override
@@ -32,6 +32,7 @@ public class QuickActionsTouchListener implements OnTouchListener {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
+                //this will never called when onDown returns false
                 if (QuickActionsTouchListener.this.quickActionsMenu.getVisibility() != View.VISIBLE) {
                     view.callOnClick();
                     return true;
